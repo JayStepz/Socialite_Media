@@ -1,21 +1,20 @@
 const { Schema, model } = require('mongoose');
 const thoughtSchema = require('./Thought');
 
-// Schema to create a course model
 const userSchema = new Schema(
   {
     userName: {
-        type: String,
-        unique: true,
-        required: true,
-        trimmed: true,
-        max_length: 16,
+      type: String,
+      unique: true,
+      required: true,
+      trim: true,
+      maxlength: 16,
     },
     email: {
       type: String,
       unique: true,
       required: true,
-      trimmed: true,
+      trim: true,
       validate: {
         validator: function (value) {
           const emailRegex = /^[\w\-\.]+@([\w-]+\.)+[\w-]{2,}$/;
@@ -24,8 +23,8 @@ const userSchema = new Schema(
         message: 'Invalid email address',
       },
     },
-    thoughts: [thoughtSchema],
-    friends: [userSchema],
+    thoughts: [{ type: Schema.Types.ObjectId, ref: 'Thought'}],
+    friends: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   },
   {
     toJSON: {
@@ -38,6 +37,6 @@ userSchema.virtual('friendCount').get(function () {
   return this.friends.length;
 });
 
-const User = model('user', userSchema);
+const User = model('User', userSchema);
 
 module.exports = User;

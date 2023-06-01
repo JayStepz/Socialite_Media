@@ -26,7 +26,7 @@ module.exports = {
           ? res.status(404).json({ message: 'No user with that ID' })
           : res.json({
               user,
-              grade: await grade(req.params.userId),
+              // grade: await grade(req.params.userId), // Make sure 'grade' is defined or remove this line if not needed
             })
       )
       .catch((err) => {
@@ -44,17 +44,14 @@ module.exports = {
 
   // Delete a user and remove their thoughts and reactions
   deleteUser(req, res) {
-    User.findOneAndRemove({ _id: req.params.userName })
+    User.findOneAndDelete({ _id: req.params.userName })
       .then((user) =>
         !user
           ? res.status(404).json({ message: 'No such user exists' })
-          : Thought.find(
-              { thoughts: req.params.userName},
-              { $pull: { thoughts: req.params.userName } },
-            )
+          : Thought.deleteMany({ thoughts: req.params.userName }) // Use deleteMany instead of find with $pull
       )
-      .then((course) =>
-        !course
+      .then((thoughts) =>
+        !thoughts
           ? res.status(404).json({
               message: 'User deleted, but no Thoughts found',
             })
@@ -97,7 +94,7 @@ module.exports = {
           ? res
               .status(404)
               .json({ message: 'No user found with that ID :(' })
-          : res.json(student)
+          : res.json(user) // Change 'student' to 'user'
       )
       .catch((err) => res.status(500).json(err));
   },
