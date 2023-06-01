@@ -1,4 +1,3 @@
-const { ObjectId } = require('mongoose').Types;
 const { User, Thought } = require('../models');
 
 module.exports = {
@@ -7,7 +6,7 @@ module.exports = {
     User.find()
       .then(async (users) => {
         const userObj = {
-          users,
+          users
         };
         return res.json(userObj);
       })
@@ -26,7 +25,6 @@ module.exports = {
           ? res.status(404).json({ message: 'No user with that ID' })
           : res.json({
               user,
-              // grade: await grade(req.params.userId), // Make sure 'grade' is defined or remove this line if not needed
             })
       )
       .catch((err) => {
@@ -42,13 +40,28 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
 
+  updateUser(req, res) {
+    User.findOneAndUpdate(
+      { _id: userId },
+      { $set: { userName, email } },
+      { new: true }
+    )
+      .then((user) => {
+        if (!user) {
+          return res.status(404).json({ message: 'No user with this id!' });
+        }
+        res.json(user);
+      })
+      .catch((err) => res.status(500).json(err));
+  },
+
   // Delete a user and remove their thoughts and reactions
   deleteUser(req, res) {
-    User.findOneAndDelete({ _id: req.params.userName })
+    User.findOneAndDelete({ _id: req.params.userId })
       .then((user) =>
         !user
           ? res.status(404).json({ message: 'No such user exists' })
-          : Thought.deleteMany({ thoughts: req.params.userName }) // Use deleteMany instead of find with $pull
+          : Thought.deleteMany({ thoughts: req.params.userName })
       )
       .then((thoughts) =>
         !thoughts
@@ -86,7 +99,7 @@ module.exports = {
   deleteFriend(req, res) {
     User.findOneAndUpdate(
       { _id: req.params.userId },
-      { $pull: { friends: { userId: req.params.userId } } },
+      { $pull: { friends: { userId: req.params.friendId } } },
       { runValidators: true, new: true }
     )
       .then((user) =>
@@ -94,7 +107,7 @@ module.exports = {
           ? res
               .status(404)
               .json({ message: 'No user found with that ID :(' })
-          : res.json(user) // Change 'student' to 'user'
+          : res.json(user)
       )
       .catch((err) => res.status(500).json(err));
   },

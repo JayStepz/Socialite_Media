@@ -7,23 +7,25 @@ const {
     deleteThought,
     createReact,
     deleteReact,
-  } = require('../../controllers/userControl');
+  } = require('../../controllers/thoughtControl');
 
 
-// /api/thoughts
+// '/'
     // get all thoughts
-    router.route('/thoughts').get(getThoughts);
+    router.route('/').get(getThoughts);
     // get single thought by _id
-    router.route('/thoughts/:thoughtId').get(getThought);
+    router.route('/:thoughtId').get(getThought);
     // post to create new thought (push thought's _id to user's thoughts array)
-    router.route('/thoughts/new').post(postThought);
+    router.route('/new').post(postThought);
     // put to update a thought by _id
-    router.route('/thoughts/update/:thoughtId').put(updateThought);
+    router.route('/update/:thoughtId').put(updateThought);
     // delete to remove a thought by _id
-    router.route('/thoughts/delete/:thoughtId').delete(deleteThought);
+    router.route('/delete/:thoughtId').delete(deleteThought);
 
-// /api/thoughts/:thoughtId/reactions
+// '/:thoughtId/reactions'
     // post to create a reaction stored in a single thought's reactions array
-    router.route('thoughts/:thoughtId/reactions/add').post(createReact);
+    router.route('/:thoughtId/reactions/add').post(createReact);
     // delete to pull and remove a reaction by reaction's reactionId
-    router.route('thoughts/:thoughtId/reactions/delete/:reactionId').delete(deleteReact);
+    router.route('/:thoughtId/reactions/delete/:reactionId').delete(deleteReact);
+
+module.exports = router;
