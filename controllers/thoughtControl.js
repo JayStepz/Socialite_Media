@@ -1,4 +1,4 @@
-const { Thought } = require('../models');
+const { User, Thought } = require('../models');
 
 module.exports = {
   // Get all thoughts
@@ -22,7 +22,11 @@ module.exports = {
 
   // Create a thought
   postThought(req, res) {
-    Thought.create(req.body)
+    Thought.create( 
+      { _id: req.params.userId },
+      { $addToSet: { thoughts: req.body } },
+      {runValidators: true, new: true }
+      )
       .then((thought) => res.json(thought))
       .catch((err) => res.status(500).json(err));
   },
