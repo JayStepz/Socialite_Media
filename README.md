@@ -1,27 +1,8 @@
-## User Story
+# Socialite Media
+![JayStepz](./Assets/InsomniaCap.JPG "Insomnia screenshot")
 
-AS A social media startup
+## Summary
+<p>Attempted to make a social media back-end allowing users to post/edit/delete thoughts, post/edit/delete reactions to thoughts, and to add/delete other users as friends.<br>As of 6/1/2023, project is incomplete. Part-time coding bootcamp is part-time in attendance hours only.</p>
 
-I WANT an API for my social network that uses a NoSQL database
-
-SO THAT my website can handle large amounts of unstructured data
-
-## Acceptance Criteria
-
-GIVEN a social network API
-
-WHEN I enter the command to invoke the application
-
-THEN my server is started and the Mongoose models are synced to the MongoDB database
-
-WHEN I open API GET routes in Insomnia for users and thoughts
-
-THEN the data for each of these routes is displayed in a formatted JSON
-
-WHEN I test API POST, PUT, and DELETE routes in Insomnia
-
-THEN I am able to successfully create, update, and delete users and thoughts in my database
-
-WHEN I test API POST and DELETE routes in Insomnia
-
-THEN I am able to successfully create and delete reactions to thoughts and add and remove friends to a user’s friend list
+## Credit
+<p>Just wanted to give my friend, Brandon, a shout out yet again for helping me with some of this project.<br>Also, thanks to the two random StackOverflow posts I found whose URLs are buried too deep within my browser history for me to find.</p>
